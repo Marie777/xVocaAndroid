@@ -1,19 +1,21 @@
 package voca.xvocaandroid;
 
-import android.support.constraint.ConstraintLayout;
+
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
+
 
 import java.util.ArrayList;
 
 public class DomainList extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,24 @@ public class DomainList extends AppCompatActivity {
             Log.d("TAG", ((TextView) view).getText().toString());
         });
 
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+       toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_launcher_foreground);
+        toolbar.setNavigationOnClickListener((view)-> Log.d("TAG","here"));
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
 }
+
+
 
 //listView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
