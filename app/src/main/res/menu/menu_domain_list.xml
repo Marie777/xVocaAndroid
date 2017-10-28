@@ -5,6 +5,6 @@
     android:id="@+id/mi"
     android:icon="@drawable/ic_launcher_background"
     app:showAsAction="ifRoom"
-    android:title="">
+    android:title="BTN">
 </item>
 </menu>
