@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -33,15 +35,13 @@ public class DomainList extends AppCompatActivity {
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Log.d("TAG", ((TextView) view).getText().toString());
+            //--TODO -- new activity for word list category
         });
-
 
 
         Toolbar toolbar = findViewById(R.id.toolbarBotton);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_launcher_foreground);
-        toolbar.setNavigationOnClickListener((view)-> Log.d("TAG","here"));
 
     }
 
@@ -51,6 +51,18 @@ public class DomainList extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add_domain:
+                Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show();
+                //Log.d("TAG","here");
+                //TODO: redirect to add domain activity
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
 
 
