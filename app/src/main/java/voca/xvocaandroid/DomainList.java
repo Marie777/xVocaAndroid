@@ -1,7 +1,6 @@
 package voca.xvocaandroid;
 
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,8 +37,8 @@ public class DomainList extends AppCompatActivity {
 
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-       toolbar.setTitle(R.string.app_name);
+        Toolbar toolbar = findViewById(R.id.toolbarBotton);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_launcher_foreground);
         toolbar.setNavigationOnClickListener((view)-> Log.d("TAG","here"));
@@ -48,7 +47,7 @@ public class DomainList extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_domain_list, menu);
         return true;
     }
 
