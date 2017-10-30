@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class WordDetails extends AppCompatActivity {
 
     private ArrayList<String> sentences;
+    private Integer[] mThumbIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,7 @@ public class WordDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         displaySentenceList();
-
-
+        displayImages();
     }
 
     @Override
@@ -48,6 +49,25 @@ public class WordDetails extends AppCompatActivity {
         }
     }
 
+    public void displayImages(){
+
+        Integer[] mThumbIds = {
+                R.drawable.tile1,
+                R.drawable.tile2,
+                R.drawable.tile3,
+                R.drawable.tile4,
+                R.drawable.tile5,
+                R.drawable.tile6,
+                R.drawable.tile7,
+                R.drawable.tile8,
+        };
+
+        GridView gridViewImg = findViewById(R.id.gridViewImages);
+        //gridViewImg.setNumColumns(3);
+        gridViewImg.setAdapter(new ImageAdapter(this, mThumbIds));
+
+    }
+
     public void displaySentenceList()
     {
         getSentences("");
@@ -57,7 +77,8 @@ public class WordDetails extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            //TODO: Like, save location, user
+            //TODO: Like?
+            Toast.makeText(this,"Like",Toast.LENGTH_SHORT).show();
         });
     }
 

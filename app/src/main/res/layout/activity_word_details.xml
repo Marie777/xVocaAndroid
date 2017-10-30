@@ -34,16 +34,28 @@ tools:context="voca.xvocaandroid.WordDetails">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
-        android:text="Translation...\n\n"/>
+        android:text="Translation...\n"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="40dp">
     <GridView
-        android:id="@+id/GridViewImages"
+        android:id="@+id/gridViewImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
-        android:gravity="center">
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
     </GridView>
-
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listViewSentences"
@@ -51,18 +63,34 @@ tools:context="voca.xvocaandroid.WordDetails">
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"/>
 
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarWordDetails"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"
-        app:title=""
-        android:background="?attr/colorPrimary"
-        android:theme="?attr/actionBarTheme"  />
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suggest new example sentence"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:paddingTop="10dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarWordDetails"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            app:title=""
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"  />
+    </RelativeLayout>
 
 </android.support.v7.widget.LinearLayoutCompat>
