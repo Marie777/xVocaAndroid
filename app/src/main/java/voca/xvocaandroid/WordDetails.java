@@ -1,19 +1,34 @@
 package voca.xvocaandroid;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class WordDetails extends AppCompatActivity {
 
+    public static final int MY_GPS_PERMISSION = 0;
+    private MyLocationService myLocationService;
+    private double lng = 0.0;
+    private double lat = 0.0;
     private ArrayList<String> sentences;
     private Integer[] mThumbIds;
 
@@ -28,6 +43,23 @@ public class WordDetails extends AppCompatActivity {
 
         displaySentenceList();
         displayImages();
+
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Intent locationIntent = new Intent(this, MyLocationService.class);
+        bindService(locationIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(mServiceConnection);
     }
 
     @Override
@@ -38,11 +70,18 @@ public class WordDetails extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()){
             case R.id.sentence_origin:
-                Toast.makeText(this,"Map",Toast.LENGTH_SHORT).show();
-                //Log.d("TAG","here");
-                //TODO: redirect to map activity
+                getLocation();
+
+               // Toast.makeText(this,String.format("%f %f", lng, lat),Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra("lng", lng);
+                intent.putExtra("lat", lat);
+                startActivity(intent);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -95,5 +134,56 @@ public class WordDetails extends AppCompatActivity {
     public void newSentence(){
 
     }
+
+
+
+    //Find Location:
+
+    private void getLocation() {
+        Location location = null;
+        if(myLocationService != null) {
+            location = myLocationService.getCurrentLocation();
+        }
+        if (location != null) {
+            lng = location.getLongitude();
+            lat = location.getLatitude();
+        }
+    }
+
+    private ServiceConnection mServiceConnection = new ServiceConnection(){
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            if (service instanceof MyLocationService.MyLocationBinder) {
+                MyLocationService.MyLocationBinder binder = (MyLocationService.MyLocationBinder) service;
+                myLocationService = binder.getService();
+            }
+            requestGPSPermission();
+        }
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    };
+
+
+    private void requestGPSPermission() {
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{ android.Manifest.permission.ACCESS_FINE_LOCATION },
+                MY_GPS_PERMISSION);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case MY_GPS_PERMISSION:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(myLocationService != null) {
+                        myLocationService.startUpdating();
+                    }
+                }
+        }
+    }
+
 
 }
