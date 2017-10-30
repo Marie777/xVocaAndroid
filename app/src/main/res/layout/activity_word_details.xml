@@ -23,12 +23,9 @@ tools:context="voca.xvocaandroid.WordDetails">
 <TextView
     android:id="@+id/tvCategoryListTitle"
     android:layout_width="match_parent"
-    android:layout_height="52dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:text="Word Details"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:text="\nWord Details\n"
     android:textSize="24sp" />
 
 
@@ -36,19 +33,23 @@ tools:context="voca.xvocaandroid.WordDetails">
         android:id="@+id/tvTranslate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
         android:text="Translation...\n\n"/>
 
     <GridView
         android:id="@+id/GridViewImages"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:gravity="center">
     </GridView>
 
 
     <ListView
         android:id="@+id/listViewSentences"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"/>
 
 
 <RelativeLayout

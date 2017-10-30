@@ -16,31 +16,18 @@ import java.util.ArrayList;
 
 public class CategoryWordLists extends AppCompatActivity {
 
+    private  ArrayList<String> Categories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_word_lists);
 
-        ArrayList<String> Categories = new ArrayList<>(10);
-        Categories.add("TEST Category");
-        Categories.add("TEST Category1");
-        Categories.add("TEST Category2");
-        Categories.add("TEST Category3");
-
-        ListView listView = findViewById(R.id.listViewCategories);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, Categories);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, RecommendedWords.class);
-            intent.putExtra("Category name", ((TextView) view).getText().toString());
-            startActivity(intent);
-        });
-
-
         Toolbar toolbar = findViewById(R.id.toolbarCategories);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        displayCategoryList();
 
     }
 
@@ -68,5 +55,30 @@ public class CategoryWordLists extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void displayCategoryList(){
+
+        getCategories("");
+
+        ListView listView = findViewById(R.id.listViewCategories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, Categories);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(this, RecommendedWords.class);
+            intent.putExtra("Category name", ((TextView) view).getText().toString());
+            startActivity(intent);
+        });
+    }
+
+    //TODO: get info from server
+    public void getCategories(String domainName){
+        Categories = new ArrayList<>(10);
+        Categories.add("TEST Category");
+        Categories.add("TEST Category1");
+        Categories.add("TEST Category2");
+        Categories.add("TEST Category3");
+
     }
 }

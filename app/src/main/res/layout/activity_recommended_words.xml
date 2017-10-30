@@ -23,15 +23,17 @@ tools:context="voca.xvocaandroid.RecommendedWords">
 <TextView
     android:id="@+id/tvWordList"
     android:layout_width="match_parent"
-    android:layout_height="52dp"
-    android:text="Recommended Words"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"
+    android:text="\nRecommended Words\n"
     android:textSize="24sp" />
 
 
     <ListView
         android:id="@+id/listViewWords"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"/>
 
 <RelativeLayout
     android:layout_width="match_parent"

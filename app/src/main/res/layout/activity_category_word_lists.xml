@@ -24,13 +24,15 @@
     android:id="@+id/tvCategoryListTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Category of Word Lists"
+    android:paddingHorizontal="10dp"
+    android:text="\nCategory of Word Lists\n"
     android:textSize="24sp" />
 
 <ListView
     android:id="@+id/listViewCategories"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="10dp"/>
 
 <RelativeLayout
     android:layout_width="match_parent"

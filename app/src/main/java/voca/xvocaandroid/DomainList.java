@@ -10,40 +10,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;
 
 public class DomainList extends AppCompatActivity {
 
+    private ArrayList<String> domains;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_domain_list);
 
-        ArrayList<String> domains = new ArrayList<>(10);
-        domains.add("TEST DOMAIN1");
-        domains.add("TEST DOMAIN2");
-        domains.add("TEST DOMAIN3");
-        domains.add("TEST DOMAIN4");
-
-        ListView listView = findViewById(R.id.listViewDomains);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, domains);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, CategoryWordLists.class);
-            intent.putExtra("domain name", ((TextView) view).getText().toString());
-            startActivity(intent);
-        });
-
-
         Toolbar toolbar = findViewById(R.id.toolbarDomain);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        displayDomainList();
     }
 
     @Override
@@ -63,6 +47,30 @@ public class DomainList extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void displayDomainList(){
+
+        getDomainList("");
+
+        ListView listView = findViewById(R.id.listViewDomains);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, domains);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(this, CategoryWordLists.class);
+            intent.putExtra("domain name", ((TextView) view).getText().toString());
+            startActivity(intent);
+        });
+    }
+
+    //TODO: get info from server
+    public void getDomainList(String userName){
+        domains = new ArrayList<>(10);
+        domains.add("TEST DOMAIN1");
+        domains.add("TEST DOMAIN2");
+        domains.add("TEST DOMAIN3");
+        domains.add("TEST DOMAIN4");
     }
 }
 

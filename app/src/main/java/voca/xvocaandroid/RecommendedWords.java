@@ -3,30 +3,30 @@ package voca.xvocaandroid;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class RecommendedWords extends AppCompatActivity {
 
+    private ArrayList<String> wordlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommended_words);
-        ArrayList<String> WOrds = new ArrayList<>(10);
-        WOrds.add("TEST word0");
-        WOrds.add("TEST word1");
-        WOrds.add("TEST word2");
-        WOrds.add("TEST word3");
+
+        displayWordList();
+    }
+
+    public void displayWordList(){
+
+        getWords("");
 
         ListView listView = findViewById(R.id.listViewWords);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, WOrds);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, wordlist);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
@@ -34,8 +34,14 @@ public class RecommendedWords extends AppCompatActivity {
             intent.putExtra("Word", ((TextView) view).getText().toString());
             startActivity(intent);
         });
-
-
     }
 
+    public void getWords(String categoryName){
+        wordlist = new ArrayList<>(10);
+        wordlist.add("TEST word0");
+        wordlist.add("TEST word1");
+        wordlist.add("TEST word2");
+        wordlist.add("TEST word3");
+
+    }
 }
