@@ -1,9 +1,9 @@
 package voca.xvocaandroid;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -34,12 +34,13 @@ public class DomainList extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            Log.d("TAG", ((TextView) view).getText().toString());
-            //--TODO -- new activity for word list category
+            Intent intent = new Intent(this, CategoryWordLists.class);
+            intent.putExtra("domain name", ((TextView) view).getText().toString());
+            startActivity(intent);
         });
 
 
-        Toolbar toolbar = findViewById(R.id.toolbarBotton);
+        Toolbar toolbar = findViewById(R.id.toolbarDomain);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -55,9 +56,9 @@ public class DomainList extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_domain:
-                Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show();
-                //Log.d("TAG","here");
-                //TODO: redirect to add domain activity
+                Intent intent = new Intent(this, ADDNewDomain.class);
+                //intent.putExtra("", ((TextView) view).getText().toString());
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

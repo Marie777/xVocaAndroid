@@ -23,7 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DomainList"></activity>
+        <activity android:name=".DomainList" />
+        <activity android:name=".CategoryWordLists" />
+        <activity android:name=".RecommendedWords" />
+        <activity android:name=".WordDetails" />
+        <activity android:name=".ADDNewDomain"></activity>
     </application>
 
 </manifest>

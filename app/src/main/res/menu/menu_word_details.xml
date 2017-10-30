@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/add_domain"
-        android:icon="@drawable/ic_add"
+        android:id="@+id/sentence_origin"
+        android:icon="@drawable/ic_map"
         app:showAsAction="always|withText"
         android:iconTint="@color/colorWhite"
         android:iconTintMode="src_over"
-        android:title="Add Domain"/>
+        android:title="Sentence origin"/>
 </menu>

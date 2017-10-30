@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/tvDomainListTitle"
-        android:layout_width="194dp"
+        android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -29,27 +29,18 @@
         android:layout_marginTop="8dp"
         android:text="Domain List"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/listViewDomains"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+/>
 
     <ListView
         android:id="@+id/listViewDomains"
-        android:layout_width="356dp"
-        android:layout_height="338dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarBotton"
+            android:id="@+id/toolbarDomain"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"

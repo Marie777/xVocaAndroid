@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/progress_monitor"
+        android:icon="@drawable/ic_monitor"
+        app:showAsAction="always|withText"
+        android:title="Progress monitor"
+        android:iconTint="@color/colorWhite"
+        android:iconTintMode="src_over" />
+    <item
+        android:id="@+id/quiz"
+        android:icon="@drawable/ic_play"
+        app:showAsAction="always|withText"
+        android:title="Quiz"
+        android:iconTint="@color/colorWhite"
+        android:iconTintMode="src_over"/>
+    <item
+        android:id="@+id/upload_files"
+        android:icon="@drawable/ic_upload"
+        app:showAsAction="always|withText"
+        android:title="Upload files"
+        android:iconTint="@color/colorWhite"
+        android:iconTintMode="src_over"/>
+
+</menu>
