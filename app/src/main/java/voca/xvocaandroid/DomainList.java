@@ -12,6 +12,13 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class DomainList extends AppCompatActivity {
@@ -28,6 +35,19 @@ public class DomainList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         displayDomainList();
+
+        //JSON request:
+        TextView tvTest = findViewById(R.id.tvTest);
+        String url = "http://10.0.2.2:3000/domain/59f33ac2d8fbcc2b54cfaa64";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> tvTest.setText("responce "+ response.toString()),
+                (error) -> tvTest.setText(error.toString()));
+
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
     }
 
     @Override

@@ -76,7 +76,7 @@ public class WordDetails extends AppCompatActivity {
                 getLocation();
 
                // Toast.makeText(this,String.format("%f %f", lng, lat),Toast.LENGTH_SHORT).show();
-
+                //TODO: send ArrayList<location> sentencesLocation
                 Intent intent = new Intent(this, MapsActivity.class);
                 intent.putExtra("lng", lng);
                 intent.putExtra("lat", lat);

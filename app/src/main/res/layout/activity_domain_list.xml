@@ -25,8 +25,13 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         android:text="\nDomain List\n"
-        android:textSize="24sp"
-/>
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvTest"
+        android:text="waiting..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ListView
         android:id="@+id/listViewDomains"
