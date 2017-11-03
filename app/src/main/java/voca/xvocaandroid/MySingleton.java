@@ -20,7 +20,6 @@ public class MySingleton {
     private MySingleton(Context ctx){
         mCtx = ctx;
         mRequestQueue = getRequestQueue();
-        Log.d("TAG", "MySingleton: ");
         /*
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
@@ -41,7 +40,6 @@ public class MySingleton {
     }
 
     public static synchronized MySingleton getInstance(Context context) {
-        Log.d("TAG", "getInstance: ");
         if (mInstance == null) {
             mInstance = new MySingleton(context);
         }
@@ -49,8 +47,7 @@ public class MySingleton {
     }
 
     public RequestQueue getRequestQueue() {
-        Log.d("TAG", "getRequestQueue: ");
-        if (mRequestQueue == null) {
+         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
@@ -59,7 +56,6 @@ public class MySingleton {
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
-        Log.d("TAG", "addToRequestQueue: ");
         getRequestQueue().add(req);
     }
 

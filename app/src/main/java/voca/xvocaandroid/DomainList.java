@@ -4,6 +4,7 @@ package voca.xvocaandroid;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -38,15 +41,71 @@ public class DomainList extends AppCompatActivity {
 
         //JSON request:
         TextView tvTest = findViewById(R.id.tvTest);
-        String url = "http://10.0.2.2:3000/domain/59f33ac2d8fbcc2b54cfaa64";
+        /*String url = "http://10.0.2.2:3000/domain/59f33ac2d8fbcc2b54cfaa64";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null,
-                response -> tvTest.setText("responce "+ response.toString()),
+                response -> tvTest.setText("response "+ response.toString()),
                 (error) -> tvTest.setText(error.toString()));
 
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        */
+
+
+
+        //GET all users
+        String urlGetUser = "http://10.0.2.2:3000/user/59fc28770774390108e1a03f";
+        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(
+                Request.Method.GET,
+                urlGetUser,
+                null,
+                (response) -> {
+                    try {
+                        String domainName = "";
+                        String description = "";
+                        String mainDomain = "";
+                        String subDomain = "";
+                        String categories = "";
+
+                        JSONArray JSONdomains = response.getJSONArray("domains");
+                        tvTest.setText("response " + JSONdomains +"\n\n ----\n");
+                        tvTest.append("length: " + JSONdomains.length() + "\n");
+                        for(int i = 0; i < JSONdomains.length(); i++){
+                            JSONObject d = JSONdomains.getJSONObject(i);
+
+                            //Check Field exist => not null
+                            if(d.has("domainName")){
+                                domainName = d.getString("domainName");
+                            }
+                            if(d.has("description")){
+                                description = d.getString("description");
+                            }
+                            if(d.has("mainDomain")){
+                                mainDomain = d.getString("mainDomain");
+                            }
+                            if(d.has("subDomain")){
+                                subDomain = d.getString("subDomain");
+                            }
+                            if(d.has("categories")){
+                                categories = d.getString("categories");
+                            }
+                            tvTest.append("domainName " + domainName + "\n");
+                            tvTest.append("description: " + description + "\n");
+                            tvTest.append("mainDomain: " + mainDomain + "\n");
+                            tvTest.append("subDomain: " + subDomain + "\n");
+                            tvTest.append("categories: " + categories + "\n");
+                        }
+                        tvTest.append("finished" + domainName + "\n" );
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                (error) -> tvTest.setText(error.toString()));
+
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest2);
 
     }
 
