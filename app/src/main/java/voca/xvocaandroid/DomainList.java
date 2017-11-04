@@ -74,6 +74,7 @@ public class DomainList extends AppCompatActivity {
                         for(int i = 0; i < JSONdomains.length(); i++){
                             JSONObject d = JSONdomains.getJSONObject(i);
 
+                            //TODO: java object:  domains, categories, words
                             //Check Field exist => not null
                             if(d.has("domainName")){
                                 domainName = d.getString("domainName");
