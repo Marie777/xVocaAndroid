@@ -1,5 +1,7 @@
 package voca.xvocaandroid;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -53,6 +55,14 @@ public class LoginActivity extends AppCompatActivity implements
                 .build();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        if (getIntent().hasExtra("notificationID")) {
+            int notificationID = getIntent().getIntExtra("notificationID", 0);
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            mNotificationManager.cancel(notificationID);
+        }
     }
 
     @Override
