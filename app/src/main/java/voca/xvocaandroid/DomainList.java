@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class DomainList extends AppCompatActivity {
 
     private ArrayList<String> domains;
+    private final static String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,76 +38,10 @@ public class DomainList extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        //TODO: get domain list from intent extras
+        getDomainList("");
         displayDomainList();
 
-        //JSON request:
-        TextView tvTest = findViewById(R.id.tvTest);
-        /*String url = "http://10.0.2.2:3000/domain/59f33ac2d8fbcc2b54cfaa64";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                response -> tvTest.setText("response "+ response.toString()),
-                (error) -> tvTest.setText(error.toString()));
-
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-        */
-
-
-
-        //GET all users
-        String urlGetUser = "http://10.0.2.2:3000/user/59fc28770774390108e1a03f";
-        JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(
-                Request.Method.GET,
-                urlGetUser,
-                null,
-                (response) -> {
-                    try {
-                        String domainName = "";
-                        String description = "";
-                        String mainDomain = "";
-                        String subDomain = "";
-                        String categories = "";
-
-                        JSONArray JSONdomains = response.getJSONArray("domains");
-                        tvTest.setText("response " + JSONdomains +"\n\n ----\n");
-                        tvTest.append("length: " + JSONdomains.length() + "\n");
-                        for(int i = 0; i < JSONdomains.length(); i++){
-                            JSONObject d = JSONdomains.getJSONObject(i);
-
-                            //TODO: java object:  domains, categories, words
-                            //Check Field exist => not null
-                            if(d.has("domainName")){
-                                domainName = d.getString("domainName");
-                            }
-                            if(d.has("description")){
-                                description = d.getString("description");
-                            }
-                            if(d.has("mainDomain")){
-                                mainDomain = d.getString("mainDomain");
-                            }
-                            if(d.has("subDomain")){
-                                subDomain = d.getString("subDomain");
-                            }
-                            if(d.has("categories")){
-                                categories = d.getString("categories");
-                            }
-                            tvTest.append("domainName " + domainName + "\n");
-                            tvTest.append("description: " + description + "\n");
-                            tvTest.append("mainDomain: " + mainDomain + "\n");
-                            tvTest.append("subDomain: " + subDomain + "\n");
-                            tvTest.append("categories: " + categories + "\n");
-                        }
-                        tvTest.append("finished" + domainName + "\n" );
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                (error) -> tvTest.setText(error.toString()));
-
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest2);
 
     }
 
@@ -131,8 +66,6 @@ public class DomainList extends AppCompatActivity {
 
     public void displayDomainList(){
 
-        getDomainList("");
-
         ListView listView = findViewById(R.id.listViewDomains);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, domains);
         listView.setAdapter(adapter);
@@ -153,6 +86,83 @@ public class DomainList extends AppCompatActivity {
         domains.add("TEST DOMAIN4");
     }
 }
+
+/*
+        //JSON request:
+        TextView tvTest = findViewById(R.id.tvTest);
+        String url = "http://10.0.2.2:3000/domain/59f33ac2d8fbcc2b54cfaa64";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> tvTest.setText("response "+ response.toString()),
+                (error) -> tvTest.setText(error.toString()));
+
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        */
+
+
+/*
+    //GET all users
+    String urlGetUser = "http://10.0.2.2:3000/user/59fc28b2b667a02a0859ab39";
+    JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(
+            Request.Method.GET,
+            urlGetUser,
+            null,
+            (response) -> {
+                try {
+                    String googleId = "";
+                    String domainName = "";
+                    String description = "";
+                    String mainDomain = "";
+                    String subDomain = "";
+                    String categories = "";
+
+
+                    JSONArray JSONdomains = response.getJSONArray("domains");
+                    tvTest.setText("response " + JSONdomains +"\n\n ----\n");
+                    tvTest.append("length: " + JSONdomains.length() + "\n");
+                    for(int i = 0; i < JSONdomains.length(); i++){
+                        JSONObject d = JSONdomains.getJSONObject(i);
+
+                        //TODO: java object:  domains, categories, words
+                        //Check Field exist => not null
+                        if(d.has("googleId")){
+                            googleId = d.getString("googleId");
+                        }
+                        if(d.has("domainName")){
+                            domainName = d.getString("domainName");
+                        }
+                        if(d.has("description")){
+                            description = d.getString("description");
+                        }
+                        if(d.has("mainDomain")){
+                            mainDomain = d.getString("mainDomain");
+                        }
+                        if(d.has("subDomain")){
+                            subDomain = d.getString("subDomain");
+                        }
+                        if(d.has("categories")){
+                            categories = d.getString("categories");
+                        }
+                        tvTest.append("googleId " + googleId + "\n");
+                        tvTest.append("domainName " + domainName + "\n");
+                        tvTest.append("description: " + description + "\n");
+                        tvTest.append("mainDomain: " + mainDomain + "\n");
+                        tvTest.append("subDomain: " + subDomain + "\n");
+                        tvTest.append("categories: " + categories + "\n");
+                    }
+                    tvTest.append("finished" + domainName + "\n" );
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            },
+            (error) -> tvTest.setText(error.toString()));
+
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest2);
+*/
 
 
 

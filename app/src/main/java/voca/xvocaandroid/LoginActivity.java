@@ -21,13 +21,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login via google's auth.
  */
+
 public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
-    private final static String TAG = "LoginActivity";
+    private final static String TAG = "Login";
+    private final static String TAG_USER = "User";
 
     private final static int RC_SIGN_IN_GOOGLE = 0;
 
@@ -82,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
+
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
@@ -99,7 +102,13 @@ public class LoginActivity extends AppCompatActivity implements
                         Request.Method.POST,
                         url,
                         data,
-                        response -> Log.d(TAG, response.toString()),
+                        response -> {
+                            Log.d(TAG, response.toString());
+                            Intent intent = new Intent(this, DomainList.class);
+                            //TODO: create user(jsonObject) -> putExtra
+                            intent.putExtra("user", response.toString());
+                            startActivity(intent);
+                            },
                         error -> Log.e(TAG, error.toString()));
 
                 MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
@@ -108,10 +117,43 @@ public class LoginActivity extends AppCompatActivity implements
                 e.printStackTrace();
             }
             Log.d(TAG, acct.getIdToken());
+
         } else {
             // Signed out, show unauthenticated UI.
             Toast.makeText(this,"Sign in failed ",Toast.LENGTH_SHORT).show();
         }
-    }
-}
 
+        //getUser("112470571093225051385");
+
+    }
+
+    /*
+
+    public void getUser(String googleId){
+
+        //---get User----:
+        try {
+            JSONObject data = new JSONObject();
+            data.put("googleId", googleId);
+            String url = "http://10.0.2.2:3000/user/googleId";
+            JsonObjectRequest jsonObjectRequestUser = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    data,
+                    response -> {
+                        Log.d(TAG_USER, response.toString());
+                        //Intent intent = new Intent(this, DomainList.class);
+                        //intent.putExtra("user", response.toString());
+                        //startActivity(intent);
+                    },
+                    error -> Log.e(TAG_USER, error.toString()));
+
+            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequestUser);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+    */
+}

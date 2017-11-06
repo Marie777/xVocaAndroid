@@ -27,6 +27,8 @@ public class CategoryWordLists extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        //TODO: get category list from intent extras
+        getCategories("");
         displayCategoryList();
 
     }
@@ -59,7 +61,6 @@ public class CategoryWordLists extends AppCompatActivity {
 
     public void displayCategoryList(){
 
-        getCategories("");
 
         ListView listView = findViewById(R.id.listViewCategories);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, Categories);

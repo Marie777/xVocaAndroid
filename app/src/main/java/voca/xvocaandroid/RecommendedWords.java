@@ -18,12 +18,12 @@ public class RecommendedWords extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommended_words);
 
+        //TODO: get word list from intent extras
+        getWords("");
         displayWordList();
     }
 
     public void displayWordList(){
-
-        getWords("");
 
         ListView listView = findViewById(R.id.listViewWords);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, wordlist);

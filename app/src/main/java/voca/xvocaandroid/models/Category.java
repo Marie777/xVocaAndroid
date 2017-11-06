@@ -1,30 +1,37 @@
 package voca.xvocaandroid.models;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Category {
-    private String name;
-    private ArrayList<String> wordList;
+    private String categoryName;
+    private ArrayList<Word> wordList;
 
-    public Category(String name, ArrayList<String> wordList) {
-        this.name = name;
+    public Category(JSONObject j) {
+
+        try {
+            categoryName = j.has("categoryName") ? j.getString("categoryName"):"";
+            JSONArray jWords = j.getJSONArray("wordList");
+            for(int i = 0; i < jWords.length(); i++) {
+                JSONObject w = jWords.getJSONObject(i);
+                wordList.add(new Word(w));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         this.wordList = wordList;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ArrayList<String> getWordList() {
+    public ArrayList<Word> getWordList() {
         return wordList;
-    }
-
-    public void setWordList(ArrayList<String> wordList) {
-        this.wordList = wordList;
     }
 }
