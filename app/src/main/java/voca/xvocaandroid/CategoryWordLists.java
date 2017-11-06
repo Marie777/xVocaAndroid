@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import voca.xvocaandroid.models.Quiz;
+
 public class CategoryWordLists extends AppCompatActivity {
 
     private  ArrayList<String> Categories;
@@ -47,8 +49,8 @@ public class CategoryWordLists extends AppCompatActivity {
                 //TODO: redirect...
                 return true;
             case R.id.quiz:
-                Toast.makeText(this,"quiz",Toast.LENGTH_SHORT).show();
-                //TODO: redirect...
+                Intent intent = new Intent(this, QuizActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.upload_files:
                 Toast.makeText(this,"upload_files",Toast.LENGTH_SHORT).show();

@@ -18,9 +18,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String title = remoteMessage.getNotification().getTitle();
         String body = remoteMessage.getNotification().getBody();
 
-        String channelID = getString(R.string.channel_id);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelID);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "");
 
         notificationBuilder
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
