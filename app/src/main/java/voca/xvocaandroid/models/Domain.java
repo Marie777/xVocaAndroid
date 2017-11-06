@@ -5,9 +5,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Domain {
+public class Domain implements Serializable{
     private String domainName;
     private String description;
     private String mainDomain;

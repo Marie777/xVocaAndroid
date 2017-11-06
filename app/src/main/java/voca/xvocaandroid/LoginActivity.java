@@ -20,6 +20,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import voca.xvocaandroid.models.User;
+
 /**
  * A login screen that offers login via google's auth.
  */
@@ -29,7 +31,6 @@ public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private final static String TAG = "Login";
-    private final static String TAG_USER = "User";
 
     private final static int RC_SIGN_IN_GOOGLE = 0;
 
@@ -103,13 +104,15 @@ public class LoginActivity extends AppCompatActivity implements
                         url,
                         data,
                         response -> {
-                            Log.d(TAG, response.toString());
+                            Log.d(TAG, "success: "+response.toString());
                             Intent intent = new Intent(this, DomainList.class);
                             //TODO: create user(jsonObject) -> putExtra
-                            intent.putExtra("user", response.toString());
+                            //intent.putExtra("user", response.toString());
+                            User userObj = new User(response);
+                            intent.putExtra("userObj", userObj);
                             startActivity(intent);
                             },
-                        error -> Log.e(TAG, error.toString()));
+                        error -> Log.e(TAG, "err: "+error.toString()));
 
                 MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 

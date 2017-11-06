@@ -5,11 +5,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Category {
+public class Category implements Serializable{
     private String categoryName;
-    private ArrayList<Word> wordList;
+    private ArrayList<Word> wordList = new ArrayList<>();
 
     public Category(JSONObject j) {
 

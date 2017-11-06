@@ -24,10 +24,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import voca.xvocaandroid.models.Domain;
+import voca.xvocaandroid.models.User;
+
 public class DomainList extends AppCompatActivity {
 
     private ArrayList<String> domains;
     private final static String TAG = "LoginActivity";
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,11 @@ public class DomainList extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        user = (User) getIntent().getExtras().get("userObj");
+        TextView tvTest = findViewById(R.id.tvTest);
+        tvTest.setText(user.getGoogleId());
         //TODO: get domain list from intent extras
-        getDomainList("");
+        getDomainList(user.getDomainList());
         displayDomainList();
 
 
@@ -66,6 +73,8 @@ public class DomainList extends AppCompatActivity {
 
     public void displayDomainList(){
 
+
+
         ListView listView = findViewById(R.id.listViewDomains);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, domains);
         listView.setAdapter(adapter);
@@ -78,12 +87,11 @@ public class DomainList extends AppCompatActivity {
     }
 
     //TODO: get info from server
-    public void getDomainList(String userName){
-        domains = new ArrayList<>(10);
-        domains.add("TEST DOMAIN1");
-        domains.add("TEST DOMAIN2");
-        domains.add("TEST DOMAIN3");
-        domains.add("TEST DOMAIN4");
+    public void getDomainList(ArrayList<Domain> domainsObj){
+       domains = new ArrayList<>();
+        domainsObj.forEach(d -> {
+            domains.add(d.getName());
+        });
     }
 }
 

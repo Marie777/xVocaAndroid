@@ -4,7 +4,9 @@ package voca.xvocaandroid.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable{
     private String word;
     private int frequency;
     private int weight;

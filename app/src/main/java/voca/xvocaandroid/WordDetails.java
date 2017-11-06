@@ -41,6 +41,8 @@ public class WordDetails extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        //TODO: send request to server - find word Details
+
         displaySentenceList();
         displayImages();
 
@@ -76,7 +78,7 @@ public class WordDetails extends AppCompatActivity {
                 getLocation();
 
                // Toast.makeText(this,String.format("%f %f", lng, lat),Toast.LENGTH_SHORT).show();
-                //TODO: send ArrayList<location> sentencesLocation
+                //TODO: send ArrayList<location> sentencesLocation and not just one location
                 Intent intent = new Intent(this, MapsActivity.class);
                 intent.putExtra("lng", lng);
                 intent.putExtra("lat", lat);
@@ -116,7 +118,7 @@ public class WordDetails extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            //TODO: Like?
+            //TODO: Like btn?
             Toast.makeText(this,"Like",Toast.LENGTH_SHORT).show();
         });
     }
