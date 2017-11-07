@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.auth.api.Auth;
@@ -18,6 +19,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.Result;
+import com.google.firebase.FirebaseApp;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +57,13 @@ public class LoginActivity extends AppCompatActivity implements
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        OptionalPendingResult<GoogleSignInResult> r = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+
+        new Thread(() -> {
+            GoogleSignInResult res = r.await();
+            runOnUiThread(() -> handleSignInResult(res));
+        }).start();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
@@ -102,28 +113,22 @@ public class LoginActivity extends AppCompatActivity implements
             Toast.makeText(this,"Sign in succeeded " + acct.getEmail() ,Toast.LENGTH_SHORT).show();
 
             String token = acct.getIdToken();
-            JSONObject data = new JSONObject();
-            try {
-                data.put("token", token);
+            String url = "http://10.0.2.2:3000/user/tokenlogin/google";
+            AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
+                    Request.Method.POST,
+                    url,
+                    null,
+                    response -> {
+                        User userObj = new User(response);
+                        Intent intent = new Intent(this, DomainList.class);
+                        intent.putExtra("userObj", userObj);
+                        intent.putExtra("token", token);
+                        startActivity(intent);
+                        },
+                    error -> Log.e(TAG, "err: "+error.toString()),
+                    token);
+            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
-                String url = "http://10.0.2.2:3000/user/tokenlogin/google";
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                        Request.Method.POST,
-                        url,
-                        data,
-                        response -> {
-                            Intent intent = new Intent(this, DomainList.class);
-                            User userObj = new User(response);
-                            intent.putExtra("userObj", userObj);
-                            startActivity(intent);
-                            },
-                        error -> Log.e(TAG, "err: "+error.toString()));
-
-                MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             Log.d(TAG, acct.getIdToken());
 
         } else {

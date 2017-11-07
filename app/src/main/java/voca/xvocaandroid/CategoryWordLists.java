@@ -46,6 +46,7 @@ public class CategoryWordLists extends AppCompatActivity {
     private Domain domain;
     private final int RC_FILE_PICKED = 0;
     private final String TAG = "Upload";
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class CategoryWordLists extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         domain = (Domain) getIntent().getExtras().get("domain");
+        token = getIntent().getExtras().getString("token");
         getCategories(domain.getCategoryList());
         displayCategoryList();
 
@@ -112,6 +114,7 @@ public class CategoryWordLists extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, RecommendedWords.class);
             intent.putExtra("Category", domain.getCategory(position));
+            intent.putExtra("token", token);
             startActivity(intent);
         });
     }
@@ -156,12 +159,13 @@ public class CategoryWordLists extends AppCompatActivity {
             data.put("domain", domain.getName());
             data.put("title", title);
             String url = "http://10.0.2.2:3000/file/pdf";
-            JsonObjectRequest jsonObjectRequestPDF = new JsonObjectRequest(
+            AuthorizedJsonRequest jsonObjectRequestPDF = new AuthorizedJsonRequest(
                     Request.Method.POST,
                     url,
                     data,
                     response -> Log.d(TAG, "uploadPDF: " + response.toString()),
-                    (error) -> Log.d(TAG, "error: " + error));
+                    (error) -> Log.d(TAG, "error: " + error),
+                    token);
 
             MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequestPDF);
         } catch (JSONException e) {

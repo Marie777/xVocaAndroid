@@ -39,6 +39,7 @@ public class WordDetails extends AppCompatActivity {
     private ArrayList<String> sentences;
     private Integer[] mThumbIds;
     private String word;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +52,20 @@ public class WordDetails extends AppCompatActivity {
 
 
         word = getIntent().getExtras().getString("Word");
+        token = getIntent().getExtras().getString("token");
 
 
         JSONObject data = new JSONObject();
         try {
             data.put("word", "blal_1");
             String url = "http://10.0.2.2:3000/word";
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+            AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                     Request.Method.GET,
                     url,
                     data,
                     response -> Log.d(TAG, "res: " + response.toString()),
-                    (error) -> Log.d(TAG, "err: " + error.toString()));
+                    (error) -> Log.d(TAG, "err: " + error.toString()),
+                    token);
 
             MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 

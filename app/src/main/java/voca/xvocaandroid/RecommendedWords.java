@@ -16,6 +16,7 @@ public class RecommendedWords extends AppCompatActivity {
 
     private ArrayList<String> wordlist;
     private Category category;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class RecommendedWords extends AppCompatActivity {
         setContentView(R.layout.activity_recommended_words);
 
         category = (Category) getIntent().getExtras().get("Category");
+        token = getIntent().getExtras().getString("token");
         getWords(category.getWordList());
         displayWordList();
     }
@@ -36,6 +38,7 @@ public class RecommendedWords extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, WordDetails.class);
             intent.putExtra("Word", ((TextView) view).getText().toString());
+            intent.putExtra("token", token);
             startActivity(intent);
         });
     }

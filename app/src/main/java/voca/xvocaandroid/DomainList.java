@@ -21,6 +21,7 @@ public class DomainList extends AppCompatActivity {
 
     private ArrayList<String> domainNames;
     private User user;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class DomainList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         user = (User) getIntent().getExtras().get("userObj");
+        token = getIntent().getExtras().getString("token");
+
         getDomainList(user.getDomainList());
         displayDomainList();
 
@@ -50,6 +53,7 @@ public class DomainList extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.add_domain:
                 Intent intent = new Intent(this, ADDNewDomain.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
                 return true;
             default:
@@ -66,6 +70,7 @@ public class DomainList extends AppCompatActivity {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, CategoryWordLists.class);
             intent.putExtra("domain", user.getDomain(position));
+            intent.putExtra("token", token);
             startActivity(intent);
         });
     }
