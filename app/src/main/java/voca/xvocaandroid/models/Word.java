@@ -21,4 +21,16 @@ public class Word implements Serializable{
             e.printStackTrace();
         }
     }
+
+    public String getWord() {
+        return word;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
 }

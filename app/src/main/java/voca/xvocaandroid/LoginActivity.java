@@ -96,14 +96,12 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void handleSignInResult(GoogleSignInResult result) {
 
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             Toast.makeText(this,"Sign in succeeded " + acct.getEmail() ,Toast.LENGTH_SHORT).show();
 
             String token = acct.getIdToken();
-
             JSONObject data = new JSONObject();
             try {
                 data.put("token", token);
@@ -114,10 +112,7 @@ public class LoginActivity extends AppCompatActivity implements
                         url,
                         data,
                         response -> {
-                            Log.d(TAG, "success: "+response.toString());
                             Intent intent = new Intent(this, DomainList.class);
-                            //TODO: create user(jsonObject) -> putExtra
-                            //intent.putExtra("user", response.toString());
                             User userObj = new User(response);
                             intent.putExtra("userObj", userObj);
                             startActivity(intent);
@@ -136,37 +131,5 @@ public class LoginActivity extends AppCompatActivity implements
             Toast.makeText(this,"Sign in failed ",Toast.LENGTH_SHORT).show();
         }
 
-        //getUser("112470571093225051385");
-
     }
-
-    /*
-
-    public void getUser(String googleId){
-
-        //---get User----:
-        try {
-            JSONObject data = new JSONObject();
-            data.put("googleId", googleId);
-            String url = "http://10.0.2.2:3000/user/googleId";
-            JsonObjectRequest jsonObjectRequestUser = new JsonObjectRequest(
-                    Request.Method.GET,
-                    url,
-                    data,
-                    response -> {
-                        Log.d(TAG_USER, response.toString());
-                        //Intent intent = new Intent(this, DomainList.class);
-                        //intent.putExtra("user", response.toString());
-                        //startActivity(intent);
-                    },
-                    error -> Log.e(TAG_USER, error.toString()));
-
-            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequestUser);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-    */
 }

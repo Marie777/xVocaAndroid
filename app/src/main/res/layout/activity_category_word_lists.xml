@@ -9,18 +9,20 @@
         android:orientation="vertical"
         tools:context="voca.xvocaandroid.CategoryWordLists">
 
-<android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_gravity="top"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:title="    X-Voca"
-    app:titleTextColor="@color/colorWhite"
-    android:theme="?attr/actionBarTheme" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="eXtra Vocabulary"
+        android:paddingLeft="15dp"
+        app:titleTextColor="@color/colorWhite"
+        android:theme="?attr/actionBarTheme" />
 
 
-<TextView
+
+    <TextView
     android:id="@+id/tvCategoryListTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

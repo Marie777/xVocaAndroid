@@ -53,4 +53,7 @@ public class Domain implements Serializable{
     public ArrayList<Category> getCategoryList() {
         return categoryList;
     }
+
+    public Category getCategory(int index){ return categoryList.get(index);}
+
 }

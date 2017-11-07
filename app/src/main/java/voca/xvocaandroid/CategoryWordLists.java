@@ -14,11 +14,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import voca.xvocaandroid.models.Category;
+import voca.xvocaandroid.models.Domain;
 import voca.xvocaandroid.models.Quiz;
+import voca.xvocaandroid.models.User;
 
 public class CategoryWordLists extends AppCompatActivity {
 
-    private  ArrayList<String> Categories;
+    private  ArrayList<String> categorieNames ;
+    private Domain domain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,8 @@ public class CategoryWordLists extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        //TODO: get category list from intent extras
-        getCategories("");
+        domain = (Domain) getIntent().getExtras().get("domain");
+        getCategories(domain.getCategoryList());
         displayCategoryList();
 
     }
@@ -65,23 +69,19 @@ public class CategoryWordLists extends AppCompatActivity {
 
 
         ListView listView = findViewById(R.id.listViewCategories);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, Categories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, categorieNames);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, RecommendedWords.class);
-            intent.putExtra("Category name", ((TextView) view).getText().toString());
+            intent.putExtra("Category", domain.getCategory(position));
             startActivity(intent);
         });
     }
 
-    //TODO: get info from server
-    public void getCategories(String domainName){
-        Categories = new ArrayList<>(10);
-        Categories.add("TEST Category");
-        Categories.add("TEST Category1");
-        Categories.add("TEST Category2");
-        Categories.add("TEST Category3");
+    public void getCategories(ArrayList<Category> categoryObj){
+        categorieNames = new ArrayList<>();
+        categoryObj.forEach(c -> categorieNames.add(c.getCategoryName()));
 
     }
 }

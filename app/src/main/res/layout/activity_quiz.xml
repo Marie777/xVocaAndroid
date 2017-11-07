@@ -7,6 +7,18 @@
     tools:context="voca.xvocaandroid.QuizActivity"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="eXtra Vocabulary"
+        android:paddingLeft="15dp"
+        app:titleTextColor="@color/colorWhite"
+        android:theme="?attr/actionBarTheme" />
+
+
     <TextView
         android:id="@+id/quiz_activity_title_tv"
         android:layout_width="match_parent"
@@ -15,12 +27,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/quiz_title"
+        android:textSize="40dp"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <AdapterViewFlipper
         android:id="@+id/quiz_activity_view_flipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_vertical"
+        android:paddingTop="20dp"
+        />
 
 </LinearLayout>

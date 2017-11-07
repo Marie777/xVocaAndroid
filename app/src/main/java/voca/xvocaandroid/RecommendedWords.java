@@ -9,17 +9,21 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import voca.xvocaandroid.models.Category;
+import voca.xvocaandroid.models.Word;
+
 public class RecommendedWords extends AppCompatActivity {
 
     private ArrayList<String> wordlist;
+    private Category category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommended_words);
 
-        //TODO: get word list from intent extras
-        getWords("");
+        category = (Category) getIntent().getExtras().get("Category");
+        getWords(category.getWordList());
         displayWordList();
     }
 
@@ -36,12 +40,9 @@ public class RecommendedWords extends AppCompatActivity {
         });
     }
 
-    public void getWords(String categoryName){
+    public void getWords(ArrayList<Word> wordListObj){
         wordlist = new ArrayList<>(10);
-        wordlist.add("TEST word0");
-        wordlist.add("TEST word1");
-        wordlist.add("TEST word2");
-        wordlist.add("TEST word3");
+        wordListObj.forEach(w -> wordlist.add(w.getWord()));
 
     }
 }

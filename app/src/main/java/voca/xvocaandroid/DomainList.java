@@ -4,7 +4,6 @@ package voca.xvocaandroid;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -13,15 +12,6 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import voca.xvocaandroid.models.Domain;
@@ -29,8 +19,7 @@ import voca.xvocaandroid.models.User;
 
 public class DomainList extends AppCompatActivity {
 
-    private ArrayList<String> domains;
-    private final static String TAG = "LoginActivity";
+    private ArrayList<String> domainNames;
     private User user;
 
     @Override
@@ -43,11 +32,9 @@ public class DomainList extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         user = (User) getIntent().getExtras().get("userObj");
-        TextView tvTest = findViewById(R.id.tvTest);
-        tvTest.setText(user.getGoogleId());
-        //TODO: get domain list from intent extras
         getDomainList(user.getDomainList());
         displayDomainList();
+
 
 
     }
@@ -63,7 +50,6 @@ public class DomainList extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.add_domain:
                 Intent intent = new Intent(this, ADDNewDomain.class);
-                //intent.putExtra("", ((TextView) view).getText().toString());
                 startActivity(intent);
                 return true;
             default:
@@ -73,25 +59,20 @@ public class DomainList extends AppCompatActivity {
 
     public void displayDomainList(){
 
-
-
         ListView listView = findViewById(R.id.listViewDomains);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, domains);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, domainNames);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(this, CategoryWordLists.class);
-            intent.putExtra("domain name", ((TextView) view).getText().toString());
+            intent.putExtra("domain", user.getDomain(position));
             startActivity(intent);
         });
     }
 
-    //TODO: get info from server
     public void getDomainList(ArrayList<Domain> domainsObj){
-       domains = new ArrayList<>();
-        domainsObj.forEach(d -> {
-            domains.add(d.getName());
-        });
+       domainNames = new ArrayList<>();
+        domainsObj.forEach(d -> domainNames.add(d.getName()));
     }
 }
 
@@ -109,69 +90,3 @@ public class DomainList extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         */
 
-
-/*
-    //GET all users
-    String urlGetUser = "http://10.0.2.2:3000/user/59fc28b2b667a02a0859ab39";
-    JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(
-            Request.Method.GET,
-            urlGetUser,
-            null,
-            (response) -> {
-                try {
-                    String googleId = "";
-                    String domainName = "";
-                    String description = "";
-                    String mainDomain = "";
-                    String subDomain = "";
-                    String categories = "";
-
-
-                    JSONArray JSONdomains = response.getJSONArray("domains");
-                    tvTest.setText("response " + JSONdomains +"\n\n ----\n");
-                    tvTest.append("length: " + JSONdomains.length() + "\n");
-                    for(int i = 0; i < JSONdomains.length(); i++){
-                        JSONObject d = JSONdomains.getJSONObject(i);
-
-                        //TODO: java object:  domains, categories, words
-                        //Check Field exist => not null
-                        if(d.has("googleId")){
-                            googleId = d.getString("googleId");
-                        }
-                        if(d.has("domainName")){
-                            domainName = d.getString("domainName");
-                        }
-                        if(d.has("description")){
-                            description = d.getString("description");
-                        }
-                        if(d.has("mainDomain")){
-                            mainDomain = d.getString("mainDomain");
-                        }
-                        if(d.has("subDomain")){
-                            subDomain = d.getString("subDomain");
-                        }
-                        if(d.has("categories")){
-                            categories = d.getString("categories");
-                        }
-                        tvTest.append("googleId " + googleId + "\n");
-                        tvTest.append("domainName " + domainName + "\n");
-                        tvTest.append("description: " + description + "\n");
-                        tvTest.append("mainDomain: " + mainDomain + "\n");
-                        tvTest.append("subDomain: " + subDomain + "\n");
-                        tvTest.append("categories: " + categories + "\n");
-                    }
-                    tvTest.append("finished" + domainName + "\n" );
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            },
-            (error) -> tvTest.setText(error.toString()));
-
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest2);
-*/
-
-
-
-//listView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));

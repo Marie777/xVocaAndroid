@@ -59,4 +59,6 @@ public class User implements Serializable{
     public ArrayList<Domain> getDomainList() {
         return domainList;
     }
+
+    public Domain getDomain(int index){ return domainList.get(index); }
 }

@@ -15,7 +15,8 @@ tools:context="voca.xvocaandroid.RecommendedWords">
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
-    app:title="    X-Voca"
+    app:title="eXtra Vocabulary"
+    android:paddingLeft="15dp"
     app:titleTextColor="@color/colorWhite"
     android:theme="?attr/actionBarTheme" />
 
