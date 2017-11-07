@@ -60,7 +60,6 @@
         </service>
 
         <activity android:name=".QuizActivity" />
-        <activity android:name=".UploadActivity"></activity>
     </application>
 
 </manifest>
