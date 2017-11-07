@@ -54,24 +54,17 @@ public class WordDetails extends AppCompatActivity {
         word = getIntent().getExtras().getString("Word");
         token = getIntent().getExtras().getString("token");
 
+        //TODO: put data from res in GUI
+        String url = "http://10.0.2.2:3000/word/" + word;
+        AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> Log.d(TAG, "res: " + response.toString()),
+                (error) -> Log.d(TAG, "err: " + error.toString()),
+                token);
 
-        JSONObject data = new JSONObject();
-        try {
-            data.put("word", "blal_1");
-            String url = "http://10.0.2.2:3000/word";
-            AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
-                    Request.Method.GET,
-                    url,
-                    data,
-                    response -> Log.d(TAG, "res: " + response.toString()),
-                    (error) -> Log.d(TAG, "err: " + error.toString()),
-                    token);
-
-            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
 
 
