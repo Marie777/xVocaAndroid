@@ -21,16 +21,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class WordDetails extends AppCompatActivity {
 
     public static final int MY_GPS_PERMISSION = 0;
+    private static final String TAG = "WordD";
     private MyLocationService myLocationService;
     private double lng = 0.0;
     private double lat = 0.0;
     private ArrayList<String> sentences;
     private Integer[] mThumbIds;
+    private String word;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,28 @@ public class WordDetails extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        //TODO: send request to server - find word Details
+
+        word = getIntent().getExtras().getString("Word");
+
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("word", "blal_1");
+            String url = "http://10.0.2.2:3000/word";
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    data,
+                    response -> Log.d(TAG, "res: " + response.toString()),
+                    (error) -> Log.d(TAG, "err: " + error.toString()));
+
+            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
 
         displaySentenceList();
         displayImages();

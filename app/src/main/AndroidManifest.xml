@@ -59,7 +59,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".QuizActivity"></activity>
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".UploadActivity"></activity>
     </application>
 
 </manifest>

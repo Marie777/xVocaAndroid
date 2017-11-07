@@ -1,9 +1,12 @@
 package voca.xvocaandroid;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +15,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import voca.xvocaandroid.models.Category;
@@ -23,6 +44,8 @@ public class CategoryWordLists extends AppCompatActivity {
 
     private  ArrayList<String> categorieNames ;
     private Domain domain;
+    private final int RC_FILE_PICKED = 0;
+    private final String TAG = "Upload";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +81,24 @@ public class CategoryWordLists extends AppCompatActivity {
                 return true;
             case R.id.upload_files:
                 Toast.makeText(this,"upload_files",Toast.LENGTH_SHORT).show();
-                //TODO: redirect...
+                startUploadIntent();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RC_FILE_PICKED:
+                if(resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    uploadPDF(uri);
+                }
+                break;
         }
     }
 
@@ -84,4 +121,53 @@ public class CategoryWordLists extends AppCompatActivity {
         categoryObj.forEach(c -> categorieNames.add(c.getCategoryName()));
 
     }
+
+    private void startUploadIntent(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        startActivityForResult(intent, RC_FILE_PICKED);
+    }
+
+    public String encodePDF(Uri uri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            if(inputStream == null) {
+                return null;
+            }
+            byte[] fileContent = IOUtils.toByteArray(inputStream);
+
+            return Base64.encodeToString(fileContent, Base64.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void uploadPDF(Uri uri) {
+        String b64 = encodePDF(uri);
+        String title = uri.toString();
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("file", b64);
+            data.put("domain", domain.getName());
+            data.put("title", title);
+            String url = "http://10.0.2.2:3000/file/pdf";
+            JsonObjectRequest jsonObjectRequestPDF = new JsonObjectRequest(
+                    Request.Method.POST,
+                    url,
+                    data,
+                    response -> Log.d(TAG, "uploadPDF: " + response.toString()),
+                    (error) -> Log.d(TAG, "error: " + error));
+
+            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequestPDF);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
