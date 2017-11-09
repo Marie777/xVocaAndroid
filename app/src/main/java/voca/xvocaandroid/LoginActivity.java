@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements
             Toast.makeText(this,"Sign in succeeded " + acct.getEmail() ,Toast.LENGTH_SHORT).show();
 
             String token = acct.getIdToken();
-            String url = "http://10.0.2.2:3000/user/tokenlogin/google";
+            String url = getString(R.string.x_voca_server) + "/user/tokenlogin/google";
             AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                     Request.Method.POST,
                     url,

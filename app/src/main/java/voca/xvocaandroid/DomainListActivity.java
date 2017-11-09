@@ -88,7 +88,7 @@ public class DomainListActivity extends AppCompatActivity {
     public void mockUser(View view) {
 
         //JSON request:
-        String url = "http://10.0.2.2:3000/user/mockUser";
+        String url = getString(R.string.x_voca_server) + "/user/mockUser";
         AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                 Request.Method.POST,
                 url,

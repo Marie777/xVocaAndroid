@@ -22,6 +22,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="x_voca_server">http://ec2-13-59-154-104.us-east-2.compute.amazonaws.com</string>
 
 
 </resources>

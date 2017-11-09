@@ -101,7 +101,7 @@ public class WordDetailsActivity extends AppCompatActivity {
 
 
     public void getWordFromServer(){
-        String url = "http://10.0.2.2:3000/word/" + word;
+        String url = getString(R.string.x_voca_server) + "/word/" + word;
         AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                 Request.Method.GET,
                 url,
@@ -115,6 +115,7 @@ public class WordDetailsActivity extends AppCompatActivity {
     }
 
     public void updateView(JSONObject response){
+       // Log.d("TEST", "updateView: " + response.toString());
         wordDetailsObj = new WordDetailsObj(response);
         TextView tvWord = findViewById(R.id.tvWord);
         TextView tvTranslate = findViewById(R.id.tvTranslate);
@@ -149,7 +150,7 @@ public class WordDetailsActivity extends AppCompatActivity {
             locationData.put("lng", lng);
             data.put("sentence", newSentence.getText().toString());
             data.put("location", locationData);
-            String url = "http://10.0.2.2:3000/word/" + word + "/sentence";
+            String url = getString(R.string.x_voca_server) + "/word/" + word + "/sentence";
             AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                     Request.Method.POST,
                     url,
@@ -255,7 +256,7 @@ public class WordDetailsActivity extends AppCompatActivity {
 
     public void createMockWord(){
         //MockWord
-        String url = "http://10.0.2.2:3000/word/mockWord";
+        String url = getString(R.string.x_voca_server) + "/word/mockWord";
         AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                 Request.Method.POST,
                 url,

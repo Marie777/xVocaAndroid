@@ -143,7 +143,7 @@ public class CategoryWordListsActivity extends AppCompatActivity {
             data.put("file", b64);
             data.put("domain", domain.getName());
             data.put("title", title);
-            String url = "http://10.0.2.2:3000/file/pdf";
+            String url = getString(R.string.x_voca_server) + "/file/pdf";
             AuthorizedJsonRequest jsonObjectRequestPDF = new AuthorizedJsonRequest(
                     Request.Method.POST,
                     url,

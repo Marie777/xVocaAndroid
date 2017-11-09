@@ -41,7 +41,8 @@ public class AddNewDomainActivity extends AppCompatActivity {
             data.put("mainDomain", ((EditText)findViewById(R.id.etDomain1)).getText());
             data.put("subDomain", ((EditText)findViewById(R.id.etDomain2)).getText());
 
-            String url = "http://10.0.2.2:3000/user/newDomain";
+//            String url = "http://10.0.2.2:3000/user/newDomain";
+            String url = getString(R.string.x_voca_server) + "/user/newDomain";
             AuthorizedJsonRequest jsonObjectRequestPDF = new AuthorizedJsonRequest(
                     Request.Method.POST,
                     url,
