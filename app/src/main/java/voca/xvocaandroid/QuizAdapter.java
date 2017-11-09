@@ -1,11 +1,13 @@
 package voca.xvocaandroid;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -44,6 +46,8 @@ public class QuizAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.question_view, null);
+
+            convertView.setMinimumWidth(parent.getWidth());
         }
 
         RadioGroup answersLayout = convertView.findViewById(R.id.questions_view_answers_layout);

@@ -55,7 +55,6 @@ public class WordDetailsActivity extends AppCompatActivity {
 
         //createMockWord();
 
-
         String url = "http://10.0.2.2:3000/word/" + word;
         AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                 Request.Method.GET,
@@ -75,9 +74,6 @@ public class WordDetailsActivity extends AppCompatActivity {
                 token);
         jsonObjectRequest.setShouldCache(false);
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-
-
-        //TODO: see more then one marker
 
     }
 

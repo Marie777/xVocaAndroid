@@ -60,15 +60,14 @@ public class CategoryWordListsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.progress_monitor:
-                Toast.makeText(this,"progress_monitor",Toast.LENGTH_SHORT).show();
-                //TODO: redirect...
+                Intent intentMonitor = new Intent(this, MonitorActivity.class);
+                startActivity(intentMonitor);
                 return true;
             case R.id.quiz:
-                Intent intent = new Intent(this, QuizActivity.class);
-                startActivity(intent);
+                Intent intentQuiz = new Intent(this, QuizActivity.class);
+                startActivity(intentQuiz);
                 return true;
             case R.id.upload_files:
-                Toast.makeText(this,"upload_files",Toast.LENGTH_SHORT).show();
                 startUploadIntent();
                 return true;
             default:

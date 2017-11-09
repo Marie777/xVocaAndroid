@@ -8,7 +8,7 @@
         android:id="@+id/questions_view_answers_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"></RadioGroup>
+        android:orientation="vertical" />
 
     <Button
         android:id="@+id/questions_view_next_btn"
