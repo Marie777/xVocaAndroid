@@ -10,6 +10,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
+import voca.xvocaandroid.models.Sentence;
+import voca.xvocaandroid.models.WordDetailsObj;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -44,10 +49,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         //TOD: replace with ArrayList
-        Double lng = getIntent().getExtras().getDouble("lng");
-        Double lat = getIntent().getExtras().getDouble("lat");
-        LatLng sentenceLocation = new LatLng(lat,lng);
-        mMap.addMarker((new MarkerOptions().position(sentenceLocation).title(lat.toString()+" " +lng.toString())));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sentenceLocation));
+        WordDetailsObj wordDetailsObj = (WordDetailsObj) getIntent().getExtras().get("wordDetailsObj");
+        ArrayList<Sentence> sentences = wordDetailsObj.getSentenceList();
+        sentences.forEach(sentence -> {
+            Double lng = sentence.getLng();
+            Double lat = sentence.getLat();
+            LatLng sentenceLocation = new LatLng(lat,lng);
+            mMap.addMarker((new MarkerOptions().position(sentenceLocation).title(lat.toString()+" " +lng.toString())));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(sentenceLocation));
+        });
+
     }
 }

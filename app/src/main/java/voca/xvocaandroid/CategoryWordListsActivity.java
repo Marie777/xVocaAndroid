@@ -1,7 +1,6 @@
 package voca.xvocaandroid;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,35 +11,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 import voca.xvocaandroid.models.Category;
 import voca.xvocaandroid.models.Domain;
-import voca.xvocaandroid.models.Quiz;
-import voca.xvocaandroid.models.User;
 
-public class CategoryWordLists extends AppCompatActivity {
+public class CategoryWordListsActivity extends AppCompatActivity {
 
     private  ArrayList<String> categorieNames ;
     private Domain domain;
@@ -112,7 +98,7 @@ public class CategoryWordLists extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, RecommendedWords.class);
+            Intent intent = new Intent(this, RecommendedWordsActivity.class);
             intent.putExtra("Category", domain.getCategory(position));
             intent.putExtra("token", token);
             startActivity(intent);

@@ -22,17 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
-public class WordDetails extends AppCompatActivity {
+import voca.xvocaandroid.models.Sentence;
+import voca.xvocaandroid.models.WordDetailsObj;
+
+public class WordDetailsActivity extends AppCompatActivity {
 
     public static final int MY_GPS_PERMISSION = 0;
-    private static final String TAG = "WordD";
     private MyLocationService myLocationService;
     private double lng = 0.0;
     private double lat = 0.0;
@@ -40,6 +37,7 @@ public class WordDetails extends AppCompatActivity {
     private Integer[] mThumbIds;
     private String word;
     private String token;
+    private WordDetailsObj wordDetailsObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +52,32 @@ public class WordDetails extends AppCompatActivity {
         word = getIntent().getExtras().getString("Word");
         token = getIntent().getExtras().getString("token");
 
-        //TODO: put data from res in GUI
+
+        //createMockWord();
+
+
         String url = "http://10.0.2.2:3000/word/" + word;
         AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
                 Request.Method.GET,
                 url,
                 null,
-                response -> Log.d(TAG, "res: " + response.toString()),
-                (error) -> Log.d(TAG, "err: " + error.toString()),
+                response -> {
+                    wordDetailsObj = new WordDetailsObj(response);
+                    TextView tvWord = findViewById(R.id.tvWord);
+                    TextView tvTranslate = findViewById(R.id.tvTranslate);
+                    tvWord.setText(wordDetailsObj.getWord());
+                    tvTranslate.setText(wordDetailsObj.getTranslate());
+                    displaySentenceList();
+                    //TODO:Images...
+                    displayImages();
+                },
+                (error) -> Log.d("TAG", "err: " + error.toString()),
                 token);
-
+        jsonObjectRequest.setShouldCache(false);
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
 
-
-        displaySentenceList();
-        displayImages();
-
-
+        //TODO: see more then one marker
 
     }
 
@@ -101,14 +107,9 @@ public class WordDetails extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.sentence_origin:
                 getLocation();
-
-               // Toast.makeText(this,String.format("%f %f", lng, lat),Toast.LENGTH_SHORT).show();
-                //TODO: send ArrayList<location> sentencesLocation and not just one location
                 Intent intent = new Intent(this, MapsActivity.class);
-                intent.putExtra("lng", lng);
-                intent.putExtra("lat", lat);
+                intent.putExtra("wordDetailsObj", wordDetailsObj);
                 startActivity(intent);
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -136,7 +137,7 @@ public class WordDetails extends AppCompatActivity {
 
     public void displaySentenceList()
     {
-        getSentences("");
+        getSentences();
 
         ListView listView = findViewById(R.id.listViewSentences);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, sentences);
@@ -148,20 +149,16 @@ public class WordDetails extends AppCompatActivity {
         });
     }
 
-    public void getSentences(String word){
+    public void getSentences(){
         sentences = new ArrayList<>(10);
-        sentences.add("TEST Sentence");
-        sentences.add("TEST Sentence1");
-        sentences.add("TEST Sentence2");
-        sentences.add("TEST Sentence3");
-
+        ArrayList<Sentence> sentenceList = wordDetailsObj.getSentenceList();
+        sentenceList.forEach(sentence -> sentences.add(sentence.getTheSentence()));
     }
 
     //TODO: add new sentence
     public void newSentence(){
 
     }
-
 
 
     //Find Location:
@@ -213,4 +210,18 @@ public class WordDetails extends AppCompatActivity {
     }
 
 
+    public void createMockWord(){
+        //MockWord
+        String url = "http://10.0.2.2:3000/word/mockWord";
+        AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
+                Request.Method.POST,
+                url,
+                null,
+                response -> Log.d("TAG", "res: " + response.toString()),
+                (error) -> Log.d("TAG", "err: " + error.toString()),
+                token);
+
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+
+    }
 }

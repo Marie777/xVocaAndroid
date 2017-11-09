@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import voca.xvocaandroid.models.Category;
 import voca.xvocaandroid.models.Word;
 
-public class RecommendedWords extends AppCompatActivity {
+public class RecommendedWordsActivity extends AppCompatActivity {
 
     private ArrayList<String> wordlist;
     private Category category;
@@ -36,7 +36,7 @@ public class RecommendedWords extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, WordDetails.class);
+            Intent intent = new Intent(this, WordDetailsActivity.class);
             intent.putExtra("Word", ((TextView) view).getText().toString());
             intent.putExtra("token", token);
             startActivity(intent);

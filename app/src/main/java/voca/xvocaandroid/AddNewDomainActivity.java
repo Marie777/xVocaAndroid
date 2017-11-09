@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 
@@ -15,7 +14,7 @@ import org.json.JSONObject;
 
 import voca.xvocaandroid.models.User;
 
-public class ADDNewDomain extends AppCompatActivity {
+public class AddNewDomainActivity extends AppCompatActivity {
 
     private static final String TAG ="addDomain" ;
     private String token;
@@ -50,7 +49,7 @@ public class ADDNewDomain extends AppCompatActivity {
                     response -> {
                         Log.d(TAG, "res: " + response.toString());
                         User userObj = new User(response);
-                        Intent intent = new Intent(this, DomainList.class);
+                        Intent intent = new Intent(this, DomainListActivity.class);
                         intent.putExtra("userObj", userObj);
                         intent.putExtra("token", token);
                         startActivity(intent);

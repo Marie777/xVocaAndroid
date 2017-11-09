@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 
@@ -21,9 +20,9 @@ import java.util.ArrayList;
 import voca.xvocaandroid.models.Domain;
 import voca.xvocaandroid.models.User;
 
-public class DomainList extends AppCompatActivity {
+public class DomainListActivity extends AppCompatActivity {
 
-    private static final String TAG = "DomainList";
+    private static final String TAG = "DomainListActivity";
     private ArrayList<String> domainNames;
     private User user;
     private String token;
@@ -57,7 +56,7 @@ public class DomainList extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_domain:
-                Intent intent = new Intent(this, ADDNewDomain.class);
+                Intent intent = new Intent(this, AddNewDomainActivity.class);
                 intent.putExtra("token", token);
                 intent.putExtra("googleId", user.getGoogleId());
                 startActivity(intent);
@@ -74,7 +73,7 @@ public class DomainList extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(this, CategoryWordLists.class);
+            Intent intent = new Intent(this, CategoryWordListsActivity.class);
             intent.putExtra("domain", user.getDomain(position));
             intent.putExtra("token", token);
             startActivity(intent);

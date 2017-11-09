@@ -10,9 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -20,11 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.Result;
-import com.google.firebase.FirebaseApp;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import voca.xvocaandroid.models.User;
 
@@ -120,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements
                     null,
                     response -> {
                         User userObj = new User(response);
-                        Intent intent = new Intent(this, DomainList.class);
+                        Intent intent = new Intent(this, DomainListActivity.class);
                         intent.putExtra("userObj", userObj);
                         intent.putExtra("token", token);
                         startActivity(intent);
