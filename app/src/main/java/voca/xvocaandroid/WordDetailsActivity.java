@@ -15,13 +15,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import voca.xvocaandroid.models.Sentence;
@@ -52,28 +58,9 @@ public class WordDetailsActivity extends AppCompatActivity {
         word = getIntent().getExtras().getString("Word");
         token = getIntent().getExtras().getString("token");
 
-
+        getWordFromServer();
         //createMockWord();
 
-        String url = "http://10.0.2.2:3000/word/" + word;
-        AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
-                Request.Method.GET,
-                url,
-                null,
-                response -> {
-                    wordDetailsObj = new WordDetailsObj(response);
-                    TextView tvWord = findViewById(R.id.tvWord);
-                    TextView tvTranslate = findViewById(R.id.tvTranslate);
-                    tvWord.setText(wordDetailsObj.getWord());
-                    tvTranslate.setText(wordDetailsObj.getTranslate());
-                    displaySentenceList();
-                    //TODO:Images...
-                    displayImages();
-                },
-                (error) -> Log.d("TAG", "err: " + error.toString()),
-                token);
-        jsonObjectRequest.setShouldCache(false);
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
     }
 
@@ -112,37 +99,30 @@ public class WordDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void displayImages(){
 
-        Integer[] mThumbIds = {
-                R.drawable.tile1,
-                R.drawable.tile2,
-                R.drawable.tile3,
-                R.drawable.tile4,
-                R.drawable.tile5,
-                R.drawable.tile6,
-                R.drawable.tile7,
-                R.drawable.tile8,
-        };
-
-        GridView gridViewImg = findViewById(R.id.gridViewImages);
-        //gridViewImg.setNumColumns(3);
-        gridViewImg.setAdapter(new ImageAdapter(this, mThumbIds));
+    public void getWordFromServer(){
+        String url = "http://10.0.2.2:3000/word/" + word;
+        AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
+                Request.Method.GET,
+                url,
+                null,
+                response -> updateView(response),
+                (error) -> Log.d("TAG", "err: " + error.toString()),
+                token);
+        jsonObjectRequest.setShouldCache(false);
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
 
     }
 
-    public void displaySentenceList()
-    {
-        getSentences();
-
-        ListView listView = findViewById(R.id.listViewSentences);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, sentences);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            //TODO: Like btn?
-            Toast.makeText(this,"Like",Toast.LENGTH_SHORT).show();
-        });
+    public void updateView(JSONObject response){
+        wordDetailsObj = new WordDetailsObj(response);
+        TextView tvWord = findViewById(R.id.tvWord);
+        TextView tvTranslate = findViewById(R.id.tvTranslate);
+        tvWord.setText(wordDetailsObj.getWord());
+        tvTranslate.setText(wordDetailsObj.getTranslate());
+        displaySentenceList();
+        //TODO:Images...
+        //displayImages();
     }
 
     public void getSentences(){
@@ -151,8 +131,41 @@ public class WordDetailsActivity extends AppCompatActivity {
         sentenceList.forEach(sentence -> sentences.add(sentence.getTheSentence()));
     }
 
+    //TODO: Add like
+    public void addLike(){
+
+    }
+
     //TODO: add new sentence
-    public void newSentence(){
+    public void newSentence(View view){
+        getLocation();
+        EditText newSentence = findViewById(R.id.etNewSentence);
+
+        JSONObject data = new JSONObject();
+        JSONObject locationData = new JSONObject();
+
+        try {
+            locationData.put("lat", lat);
+            locationData.put("lng", lng);
+            data.put("sentence", newSentence.getText().toString());
+            data.put("location", locationData);
+            String url = "http://10.0.2.2:3000/word/" + word + "/sentence";
+            AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
+                    Request.Method.POST,
+                    url,
+                    data,
+                    response -> {
+                        newSentence.setText("Suggest new example sentence");
+                        updateView(response);
+                    },
+                    (error) -> Log.d("TAG", "err: " + error.toString()),
+                    token);
+
+            MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -205,6 +218,40 @@ public class WordDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    public void displaySentenceList()
+    {
+        getSentences();
+
+        ListView listView = findViewById(R.id.listViewSentences);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_item_view, sentences);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            //TODO: Like btn?
+            Toast.makeText(this,"Like",Toast.LENGTH_SHORT).show();
+            addLike();
+        });
+    }
+
+//    public void displayImages(){
+//
+//        Integer[] mThumbIds = {
+//                R.drawable.tile1,
+//                R.drawable.tile2,
+//                R.drawable.tile3,
+//                R.drawable.tile4,
+//                R.drawable.tile5,
+//                R.drawable.tile6,
+//                R.drawable.tile7,
+//                R.drawable.tile8,
+//        };
+//
+//        GridView gridViewImg = findViewById(R.id.gridViewImages);
+//        //gridViewImg.setNumColumns(3);
+//        gridViewImg.setAdapter(new ImageAdapter(this, mThumbIds));
+//
+//    }
 
     public void createMockWord(){
         //MockWord

@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Domain Name" />
+            android:hint="Domain Name" />
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Description" />
+            android:hint="Description" />
 
        <EditText
            android:id="@+id/etDomain1"
@@ -55,7 +55,7 @@
            android:layout_weight="1"
            android:ems="10"
            android:inputType="textPersonName"
-           android:text="Main Domain **multi choice**" />
+           android:hint="Main Domain" />
 
        <EditText
        android:id="@+id/etDomain2"
@@ -64,7 +64,7 @@
        android:layout_weight="1"
        android:ems="10"
        android:inputType="textPersonName"
-       android:text="Sub Domain **multi choice**" />
+       android:hint="Sub Domain" />
    </LinearLayout>
 
     <Button
