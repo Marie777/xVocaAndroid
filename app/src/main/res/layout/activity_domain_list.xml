@@ -35,6 +35,14 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "mockUser"
+        android:gravity="right"
+        android:layout_gravity="bottom"
+        android:onClick="mockUser"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -47,5 +55,7 @@
             android:background="?attr/colorPrimary"
             android:theme="?attr/actionBarTheme" />
     </RelativeLayout>
+
+
 
 </android.support.v7.widget.LinearLayoutCompat>

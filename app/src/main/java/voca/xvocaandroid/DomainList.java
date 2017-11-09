@@ -4,13 +4,17 @@ package voca.xvocaandroid;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+
+import com.android.volley.Request;
 
 import java.util.ArrayList;
 
@@ -19,6 +23,7 @@ import voca.xvocaandroid.models.User;
 
 public class DomainList extends AppCompatActivity {
 
+    private static final String TAG = "DomainList";
     private ArrayList<String> domainNames;
     private User user;
     private String token;
@@ -54,6 +59,7 @@ public class DomainList extends AppCompatActivity {
             case R.id.add_domain:
                 Intent intent = new Intent(this, ADDNewDomain.class);
                 intent.putExtra("token", token);
+                intent.putExtra("googleId", user.getGoogleId());
                 startActivity(intent);
                 return true;
             default:
@@ -79,19 +85,20 @@ public class DomainList extends AppCompatActivity {
        domainNames = new ArrayList<>();
         domainsObj.forEach(d -> domainNames.add(d.getName()));
     }
-}
 
-/*
+    public void mockUser(View view) {
+
         //JSON request:
-        TextView tvTest = findViewById(R.id.tvTest);
-        String url = "http://10.0.2.2:3000/domain/59f33ac2d8fbcc2b54cfaa64";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
+        String url = "http://10.0.2.2:3000/user/mockUser";
+        AuthorizedJsonRequest jsonObjectRequest = new AuthorizedJsonRequest(
+                Request.Method.POST,
                 url,
                 null,
-                response -> tvTest.setText("response "+ response.toString()),
-                (error) -> tvTest.setText(error.toString()));
+                response -> Log.d(TAG, "mockUser: " + response.toString()),
+                (error) -> Log.d(TAG, "mockUser: "),
+                token);
 
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
-        */
+    }
+}
 
